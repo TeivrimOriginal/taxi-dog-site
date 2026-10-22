@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Такса в такси - BLACK SPRING</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+            margin-bottom: 30px;
+        }
+        .scene {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(to bottom, #87ceeb 0%, #e0f6ff 50%, #333 50%, #222 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        .road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: #333;
+        }
+        .road-lines {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                to right,
+                #fff 0,
+                #fff 40px,
+                transparent 40px,
+                transparent 80px
+            );
+            animation: roadMove 2s linear infinite;
+        }
+        @keyframes roadMove {
+            0% { background-position: 0 0; }
+            100% { background-position: -80px 0; }
+        }
+        .taxi {
+            position: absolute;
+            bottom: 60px;
+            left: 50px;
+            width: 200px;
+            height: 100px;
+            animation: taxiBounce 0.5s ease-in-out infinite;
+        }
+        .taxi-body {
+            position: absolute;
+            bottom: 20px;
+            width: 180px;
+            height: 60px;
+            background: #ffd700;
+            border-radius: 30px 30px 10px 10px;
+        }
+        .taxi-top {
+            position: absolute;
+            bottom: 70px;
+            left: 30px;
+            width: 120px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 30px 30px 0 0;
+        }
+        .taxi-window {
+            position: absolute;
+            bottom: 75px;
+            left: 45px;
+            width: 90px;
+            height: 30px;
+            background: #87ceeb;
+            border-radius: 20px 20px 0 0;
+        }
+        .taxi-wheel {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 50%;
+            border: 3px solid #555;
+            animation: wheelSpin 0.5s linear infinite;
+        }
+        .taxi-wheel.front {
+            left: 30px;
+        }
+        .taxi-wheel.back {
+            right: 30px;
+        }
+        @keyframes wheelSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes taxiBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        .dachshund {
+            position: absolute;
+            bottom: 110px;
+            left: 80px;
+            z-index: 10;
+        }
+        .dachshund-body {
+            position: absolute;
+            width: 80px;
+            height: 30px;
+            background: #8b4513;
+            border-radius: 20px;
+        }
+        .dachshund-head {
+            position: absolute;
+            right: -25px;
+            top: -10px;
+            width: 35px;
+            height: 35px;
+            background: #8b4513;
+            border-radius: 50%;
+        }
+        .dachshund-ear {
+            position: absolute;
+            right: -20px;
+            top: 5px;
+            width: 15px;
+            height: 25px;
+            background: #65330e;
+            border-radius: 50%;
+        }
+        .dachshund-ear.left {
+            right: -5px;
+        }
+        .dachshund-snout {
+            position: absolute;
+            right: -35px;
+            top: 15px;
+            width: 20px;
+            height: 15px;
+            background: #65330e;
+            border-radius: 50%;
+        }
+        .dachshund-leg {
+            position: absolute;
+            bottom: -15px;
+            width: 8px;
+            height: 20px;
+            background: #8b4513;
+            border-radius: 5px;
+            animation: legMove 0.5s ease-in-out infinite;
+        }
+        .dachshund-leg:nth-child(1) { left: 10px; animation-delay: 0s; }
+        .dachshund-leg:nth-child(2) { left: 25px; animation-delay: 0.25s; }
+        .dachshund-leg:nth-child(3) { right: 25px; animation-delay: 0.25s; }
+        .dachshund-leg:nth-child(4) { right: 10px; animation-delay: 0s; }
+        @keyframes legMove {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+        .dachshund-tail {
+            position: absolute;
+            left: -15px;
+            top: 10px;
+            width: 20px;
+            height: 8px;
+            background: #8b4513;
+            border-radius: 5px;
+            animation: tailWag 0.3s ease-in-out infinite;
+        }
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .info-box h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+        .info-box p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .telegram-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #0088cc, #00d4ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .telegram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
+        }
+        .rules-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .rules-list li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 BLACK SPRING 🌸</h1>
+        <p class="subtitle">Инфо канал флуда</p>
+        
+        <div class="scene">
+            <div class="road">
+                <div class="road-lines"></div>
+            </div>
+            <div class="dachshund">
+                <div class="dachshund-tail"></div>
+                <div class="dachshund-leg"></div>
+                <div class="dachshund-leg"></div>
+                <div class="dachshund-leg"></div>
+                <div class="dachshund-leg"></div>
+                <div class="dachshund-body"></div>
+                <div class="dachshund-head"></div>
+                <div class="dachshund-ear left"></div>
+                <div class="dachshund-ear"></div>
+                <div class="dachshund-snout"></div>
+            </div>
+            <div class="taxi">
+                <div class="taxi-top"></div>
+                <div class="taxi-window"></div>
+                <div class="taxi-body"></div>
+                <div class="taxi-wheel front"></div>
+                <div class="taxi-wheel back"></div>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>📋 Информация</h2>
+            <p>Норма: <span class="highlight">70 сообщений в неделю</span></p>
+            <p>Чистка: каждое воскресенье в 21:00</p>
+            <p>Если вы в чате меньше 3 дней — не участвуете в чистке</p>
+        </div>
+        
+        <div class="info-box">
+            <h2>⚠️ Основные правила</h2>
+            <ul class="rules-list">
+                <li>🚫 Треш-контент (18+) — <span class="highlight">бан навсегда</span></li>
+                <li>🚫 Спам — предупреждение</li>
+                <li>🚫 Осуждения — предупреждение</li>
+                <li>🚫 Конфликты — предупреждение/мут</li>
+                <li>🚫 Реклама — <span class="highlight">бан навсегда</span></li>
+                <li>🚫 Политика — предупреждение</li>
+            </ul>
+        </div>
+        
+        <a href="https://t.me/info6784" class="telegram-link" target="_blank">
+            ✨ Перейти в канал ✨
+        </a>
+    </div>
+</body>
+</html>
