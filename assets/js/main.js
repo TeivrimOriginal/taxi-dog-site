@@ -383,6 +383,13 @@
   }, { threshold: .3 });
   if (countersBox) countObserver.observe(countersBox);
 
+  /* ---------- service worker (offline + install) ---------- */
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+
   /* ---------- mobile menu ---------- */
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');

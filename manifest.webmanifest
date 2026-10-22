@@ -1,0 +1,20 @@
+{
+  "name": "BLACK SPRING — инфо канал флуда",
+  "short_name": "BLACK SPRING",
+  "description": "Уютный флуд с ролями Genshin Impact и Honkai: Star Rail. Норма 70 сообщений в неделю.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#06070f",
+  "theme_color": "#0b0f22",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
