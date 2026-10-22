@@ -361,6 +361,83 @@
   .role-chip b { display: block; font-size: .88rem; font-weight: 700; margin-bottom: 5px; }
   .role-chip span { color: var(--muted); font-size: .74rem; line-height: 1.5; }
   .legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 24px; color: var(--muted); font-size: .8rem; }
+  .legend-note { margin-left: auto; }
+  .legend-note a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,122,184,.35); }
+
+  /* roles toolbar */
+  .roles-toolbar {
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+    margin-bottom: 26px;
+  }
+  .search {
+    position: relative; display: flex; align-items: center; gap: 10px; flex: 1 1 320px; max-width: 460px;
+    border: 1px solid var(--border); background: var(--card); border-radius: 100px; padding: 4px 16px;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: border-color .3s, box-shadow .3s;
+  }
+  .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255,122,184,.12); }
+  .search-ico { color: var(--muted); font-size: 1.1rem; line-height: 1; }
+  .search input {
+    flex: 1; border: 0; outline: 0; background: transparent; color: var(--ink);
+    font-family: inherit; font-size: .9rem; padding: 12px 0;
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search-clear {
+    border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: .8rem;
+    padding: 6px; border-radius: 50%; transition: color .25s, background .25s;
+  }
+  .search-clear:hover { color: var(--ink); background: var(--pill); }
+  .counters { display: flex; flex-wrap: wrap; gap: 10px; }
+  .counter {
+    border: 1px solid var(--border); background: var(--card); border-radius: 16px;
+    padding: 10px 16px; min-width: 96px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    transition: transform .3s, background .3s;
+  }
+  .counter:hover { transform: translateY(-3px); background: var(--card-2); }
+  .counter b { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; line-height: 1; }
+  .counter small { display: block; margin-top: 4px; font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .counter.free b { color: #6ee7a8; }
+  .counter.busy b { color: var(--accent); }
+  .counter.hold b { color: #9dd7ff; }
+
+  /* role groups */
+  .role-groups { display: flex; flex-direction: column; gap: 16px; }
+  .role-group {
+    border: 1px solid var(--border); background: var(--card); border-radius: 24px; padding: 22px 24px 24px;
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    transition: background .35s, border-color .35s;
+  }
+  .role-group:hover { background: var(--card-2); }
+  .role-group.hidden { display: none; }
+  .rg-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .rg-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 700; letter-spacing: .02em;
+  }
+  .rg-game {
+    font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    padding: 5px 10px; border-radius: 100px; border: 1px solid var(--border); color: var(--muted);
+  }
+  .rg-game.gi { color: #7ee0ff; border-color: rgba(126,224,255,.35); }
+  .rg-game.hsr { color: #ff9ad5; border-color: rgba(255,154,213,.35); }
+  .rg-count { margin-left: auto; font-size: .74rem; color: var(--muted); }
+  .rg-count b { color: var(--accent); }
+  .char-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .char {
+    display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 100px;
+    border: 1px solid var(--border); background: var(--pill); font-size: .82rem; font-weight: 500;
+    color: var(--ink); transition: transform .25s, background .25s, border-color .25s, color .25s;
+    cursor: default;
+  }
+  .char:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--card-2); }
+  .char .mark { font-size: .72rem; opacity: .9; }
+  .char.busy { border-color: rgba(255,122,184,.45); background: rgba(255,122,184,.12); }
+  .char.hold { border-color: rgba(157,215,255,.4); background: rgba(157,215,255,.1); }
+  .char.hidden { display: none; }
+  .char.match { box-shadow: 0 0 0 2px var(--accent-3); }
+  .empty-note {
+    text-align: center; color: var(--muted); padding: 40px 0; font-size: .9rem;
+    border: 1px dashed var(--border); border-radius: 20px;
+  }
 
   /* footer */
   footer { position: relative; z-index: 4; margin-top: 40px; overflow: hidden; }
@@ -753,32 +830,25 @@
       <h2>Вселенные и <em>персонажи</em></h2>
       <p class="section-desc">Выбирайте роль из списка и отмечайтесь в чате. Занятые роли помечены 🌪, бронь — ☁️.</p>
     </div>
-    <div class="roles reveal">
-      <div class="role-chip"><b>Мондштадт</b><span>Венти, Джинн, Дилюк, Мона, Кокоми…</span></div>
-      <div class="role-chip"><b>Ли Юэ</b><span>Чжун Ли, Ху Тао, Гань Юй, Сяо, Е Лань…</span></div>
-      <div class="role-chip"><b>Инадзума</b><span>Райдэн, Аяка, Кадзуха, Яэ Мико, Кокоми…</span></div>
-      <div class="role-chip"><b>Сумеру</b><span>Нахида, Аль-Хайтам, Нилу, Сайно, Фарузан…</span></div>
-      <div class="role-chip"><b>Фонтейн</b><span>Фурина, Нёвиллет, Навия, Клоринда, Ризли…</span></div>
-      <div class="role-chip"><b>Натлан</b><span>Мавуика, Качина, Муалани, Ситлали, Часка…</span></div>
-      <div class="role-chip"><b>Нод-Край</b><span>Нефер, Инеффа, Дурин, Николь Рейн, Алиса…</span></div>
-      <div class="role-chip"><b>Снежная</b><span>Коломбина, Дотторе, Капитано, Арлекино, Тарталья…</span></div>
-      <div class="role-chip"><b>Genshin · Другие</b><span>Дайнслейф, Итэр, Люмин, Паймон, Скирк…</span></div>
-      <div class="role-chip"><b>Astral Express</b><span>Вельт, Дань Хэн, Март 7, Стелла, Химеко…</span></div>
-      <div class="role-chip"><b>Herta Space Station</b><span>Арлан, Аста, Герта, Жуань Мэй…</span></div>
-      <div class="role-chip"><b>Jarilo-VI</b><span>Броня, Гепард, Сееле, Клара, Сервал…</span></div>
-      <div class="role-chip"><b>Xianzhou Alliance</b><span>Байлу, Лоча, Фу Сюань, Цзин Юань, Фэйсяо…</span></div>
-      <div class="role-chip"><b>Stellaron Hunters</b><span>Блэйд, Кафка, Светлячок, Серебряный волк…</span></div>
-      <div class="role-chip"><b>The IWC</b><span>Авантюрин, Топаз, Алмаз, Сапфир, Янтарь…</span></div>
-      <div class="role-chip"><b>Penacony</b><span>Воскресенье, Галлахер, Зарянка, Миша…</span></div>
-      <div class="role-chip"><b>Amphoreus</b><span>Аглая, Анакса, Кастория, Мидей, Фаенон…</span></div>
-      <div class="role-chip"><b>HSR · Другие</b><span>Аргенти, Ахерон, Бутхилл, Искорка, Рацио…</span></div>
-      <div class="role-chip"><b>Эоны</b><span>Аха, Нанук, Нус, Фули, Эна, Яоши…</span></div>
-      <div class="role-chip"><b>Свободные роли</b><span>Смотрите полный список в инфо-канале →</span></div>
+    <div class="roles-toolbar reveal">
+      <div class="search">
+        <span class="search-ico">⌕</span>
+        <input type="search" id="roleSearch" placeholder="Поиск роли или персонажа…" autocomplete="off">
+        <button class="search-clear" id="roleClear" aria-label="Очистить">✕</button>
+      </div>
+      <div class="counters">
+        <div class="counter"><b id="cTotal">0</b><small>всего ролей</small></div>
+        <div class="counter free"><b id="cFree">0</b><small>свободно</small></div>
+        <div class="counter busy"><b id="cBusy">0</b><small>занято 🌪</small></div>
+        <div class="counter hold"><b id="cHold">0</b><small>бронь ☁️</small></div>
+      </div>
     </div>
+    <div class="role-groups reveal" id="roleGroups"></div>
     <div class="legend">
       <span>🌪 — роль занята</span>
       <span>☁️ — бронь</span>
       <span>— — свободно</span>
+      <span class="legend-note">Полный список поддерживается в <a href="https://t.me/info6784" target="_blank" rel="noopener">@info6784</a></span>
     </div>
   </section>
 </main>
@@ -1084,6 +1154,112 @@
     });
   }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- roles database ---------- */
+  // * — занято (🌪), ~ — бронь (☁️)
+  const UNIS = [
+    ['Мондштадт', 'Genshin Impact', 'gi', 'Венти|Джинн|Рэйзор|Кли|Барбара|Эмбер|Дилюк|Беннет|Диона|Мона|Альбедо|Ноэлль|Сахароза|Розария|Фишль|Эола|Кэйа|Мика|Лиза|Далия'],
+    ['Ли Юэ', 'Genshin Impact', 'gi', 'Гань Юй|Чун Юнь|Бай Чжу|Яо Яо|Сяо|Чжун Ли|Син Цю|Шэнь Хэ|Нин Гуан|Ци Ци|Е Лань|Бэй Доу|Кэ Цин|Юнь Цзинь|Сян Лин|Синь Янь|Янь Фэй|Ху Тао|Ка Мин|Сянь Юнь|Цзы Бай|Лань Янь'],
+    ['Инадзума', 'Genshin Impact', 'gi', 'Аято|Аяка|Саю|Сара|Яэ Мико|Райдэн|Кокоми*|Ёимия|Тома|Кирара|Куки Синобу|Кадзуха|Хэйдзо|Итто|Горо*|Мидзуки'],
+    ['Сумеру', 'Genshin Impact', 'gi', 'Аль-Хайтам|Фарузан|Нилу|Лайла|Дэхья|Кавех|Нахида|Кандакия|Коллеи|Тигнари|Дори|Сетос|Сайно'],
+    ['Фонтейн', 'Genshin Impact', 'gi', 'Лини|Линетт|Фремине|Навия|Нёвиллет|Клоринда|Фурина|Тиори|Шеврез|Ризли|Эмилия|Сиджвин|Эскофье'],
+    ['Натлан', 'Genshin Impact', 'gi', 'Качина|Муалани|Кинич|Шилонен*|Ситлали|Иансан|Мавуика|Часка|Оророн|Вареса|Ифа'],
+    ['Нод-Край', 'Genshin Impact', 'gi', 'Нефер|Инеффа|Лаума|Флинс*|Рери*|Алиса|Николь Рейн|Варка|Дурин*|Ягода|Иллуга|Айно'],
+    ['Снежная', 'Genshin Impact', 'gi', 'Коломбина*|Дотторе|Сандроне*|Капитано|Арлекино*|Пьеро|Тарталья*|Панталоне|Пульчинелла|Царица|Синьора|Скарамучча|Одетта|Водяница*|Митя|Валера'],
+    ['Genshin · Другие', 'Genshin Impact', 'gi', 'Дайнслейф|Итэр|Люмин|Паймон*|Скирк|Сказитель'],
+    ['Astral Express', 'Honkai: Star Rail', 'hsr', 'Вельт|Дань Хэн|Март 7|Стелла|Келус|Химеко'],
+    ['Herta Space Station', 'Honkai: Star Rail', 'hsr', 'Арлан|Аста|Герта|Жуань Мэй'],
+    ['Jarilo-VI', 'Honkai: Star Rail', 'hsr', 'Броня|Гепард|Сееле*|Клара|Лука|Наташа|Пела|Рысь|Сампо|Сервал|Хук'],
+    ['Xianzhou Alliance', 'Honkai: Star Rail', 'hsr', 'Байлу|Бэйхэн|Гуйнайфэнь|Линша|Лоча|Моцзэ|Сушан|Сюэи|Тинъюнь|Фу Сюань|Фэйсяо|Ханья|ХоХо|Цзин Юань|Цзинлю|Цинцюэ|Цзяоцю|Юйкун|Юньли|Яньцин'],
+    ['Stellaron Hunters', 'Honkai: Star Rail', 'hsr', 'Блэйд*|Кафка|Светлячок|Серебряный волк'],
+    ['The IWC', 'Honkai: Star Rail', 'hsr', 'Авантюрин|Агат|Алмаз|Обсидиан|Опал|Перламутр|Сапфир|Сугилит|Топаз|Янтарь|Яшма'],
+    ['Penacony', 'Honkai: Star Rail', 'hsr', 'Воскресенье|Галлахер|Господин Река|Зарянка|Миша'],
+    ['Amphoreus', 'Honkai: Star Rail', 'hsr', 'Аглая|Анакса*|Кастория|Кирена|Мидей|Трибби*|Фаенон|Цифер'],
+    ['HSR · Другие', 'Honkai: Star Rail', 'hsr', 'Аргенти|Ахерон|Бутхилл*|Искорка|Констанция|Раппа*|Черный Лебедь|Рацио'],
+    ['Эоны', 'Honkai: Star Rail', 'hsr', 'Акивили|Аха|Идрила|Клипот|Лань|Лун|Мифус|Нанук|Нус|Ороборос|Тайззиронт|Терминус|Фули|ХуХ|Шипе|Эна|Яоши']
+  ];
+
+  const MARK = { f: { cls: '', ico: '·', title: 'свободно' }, b: { cls: 'busy', ico: '🌪', title: 'занято' }, h: { cls: 'hold', ico: '☁️', title: 'бронь' } };
+  const groupsEl = document.getElementById('roleGroups');
+  const cTotal = document.getElementById('cTotal');
+  const cFree = document.getElementById('cFree');
+  const cBusy = document.getElementById('cBusy');
+  const cHold = document.getElementById('cHold');
+  const searchInput = document.getElementById('roleSearch');
+  const clearBtn = document.getElementById('roleClear');
+
+  let allChars = [];
+
+  UNIS.forEach(([title, game, gclass, list]) => {
+    const group = document.createElement('div');
+    group.className = 'role-group';
+    const chars = list.split('|').map(raw => {
+      let name = raw, st = 'f';
+      if (raw.endsWith('*')) { name = raw.slice(0, -1); st = 'b'; }
+      else if (raw.endsWith('~')) { name = raw.slice(0, -1); st = 'h'; }
+      return { name, st };
+    });
+    const free = chars.filter(c => c.st === 'f').length;
+    group.innerHTML =
+      '<div class="rg-head">' +
+        '<span class="rg-title">' + title + '</span>' +
+        '<span class="rg-game ' + gclass + '">' + game + '</span>' +
+        '<span class="rg-count">свободно <b>' + free + '</b> из ' + chars.length + '</span>' +
+      '</div>' +
+      '<div class="char-list"></div>';
+    const listEl = group.querySelector('.char-list');
+    chars.forEach(c => {
+      const el = document.createElement('span');
+      el.className = 'char ' + MARK[c.st].cls;
+      el.dataset.name = c.name.toLowerCase();
+      el.dataset.st = c.st;
+      el.title = MARK[c.st].title;
+      el.innerHTML = '<span class="mark">' + MARK[c.st].ico + '</span>' + c.name;
+      listEl.appendChild(el);
+      allChars.push({ el, st: c.st });
+    });
+    groupsEl.appendChild(group);
+  });
+
+  const emptyNote = document.createElement('div');
+  emptyNote.className = 'empty-note';
+  emptyNote.textContent = 'Ничего не найдено. Попробуй другое имя ✨';
+  emptyNote.style.display = 'none';
+  groupsEl.appendChild(emptyNote);
+
+  function updateCounters() {
+    let total = 0, free = 0, busy = 0, hold = 0;
+    allChars.forEach(c => {
+      if (c.el.classList.contains('hidden')) return;
+      total++;
+      if (c.st === 'f') free++; else if (c.st === 'b') busy++; else hold++;
+    });
+    cTotal.textContent = total;
+    cFree.textContent = free;
+    cBusy.textContent = busy;
+    cHold.textContent = hold;
+  }
+
+  function filterRoles(q) {
+    const query = q.trim().toLowerCase();
+    allChars.forEach(c => {
+      const hit = !query || c.el.dataset.name.includes(query);
+      c.el.classList.toggle('hidden', !hit);
+      c.el.classList.toggle('match', !!query && hit);
+    });
+    let visible = 0;
+    groupsEl.querySelectorAll('.role-group').forEach(g => {
+      const has = g.querySelectorAll('.char:not(.hidden)').length;
+      g.classList.toggle('hidden', has === 0);
+      if (has) visible += has;
+    });
+    emptyNote.style.display = visible ? 'none' : 'block';
+    updateCounters();
+  }
+
+  searchInput.addEventListener('input', () => filterRoles(searchInput.value));
+  clearBtn.addEventListener('click', () => { searchInput.value = ''; filterRoles(''); searchInput.focus(); });
+  updateCounters();
 </script>
 </body>
 </html>
