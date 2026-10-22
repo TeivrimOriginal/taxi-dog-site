@@ -382,3 +382,39 @@
     });
   }, { threshold: .3 });
   if (countersBox) countObserver.observe(countersBox);
+
+  /* ---------- mobile menu ---------- */
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileMenu.classList.toggle('open');
+      menuBtn.querySelector('.ico').textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.querySelector('.ico').textContent = '☰';
+    }));
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.classList.contains('open')) return;
+      if (mobileMenu.contains(e.target) || menuBtn.contains(e.target)) return;
+      mobileMenu.classList.remove('open');
+      menuBtn.querySelector('.ico').textContent = '☰';
+    });
+  }
+
+  /* ---------- keyboard shortcuts ---------- */
+  document.addEventListener('keydown', (e) => {
+    const tag = (e.target && e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T' || e.key === 'щ' || e.key === 'Щ') {
+      applyTheme(root.classList.contains('night') ? 'day' : 'night');
+    } else if (e.key === 'w' || e.key === 'W' || e.key === 'ц' || e.key === 'Ц') {
+      const i = modes.findIndex(m => m.id === weather);
+      applyWeather(modes[(i + 1) % modes.length].id);
+    } else if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+      mobileMenu.classList.remove('open');
+      if (menuBtn) menuBtn.querySelector('.ico').textContent = '☰';
+    }
+  });
