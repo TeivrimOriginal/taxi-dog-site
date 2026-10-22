@@ -439,6 +439,16 @@
     border: 1px dashed var(--border); border-radius: 20px;
   }
 
+  /* steps */
+  .step { position: relative; overflow: hidden; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 3.4rem; font-weight: 700; line-height: 1;
+    color: var(--accent); opacity: .18; position: absolute; right: 18px; top: 6px;
+    transition: opacity .45s, transform .45s;
+  }
+  .step:hover .step-num { opacity: .38; transform: translateY(-4px) rotate(-4deg); }
+  .step p a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,122,184,.35); }
+
   /* footer */
   footer { position: relative; z-index: 4; margin-top: 40px; overflow: hidden; }
   .footer-cta {
@@ -722,6 +732,31 @@
     </div>
   </section>
 
+  <section class="section" id="start">
+    <div class="section-head reveal">
+      <span class="section-kicker">быстрый старт</span>
+      <h2>Как <em>начать</em></h2>
+      <p class="section-desc">Три шага — и вы уже часть флуда.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="card step reveal">
+        <div class="step-num">01</div>
+        <h3>Подпишись на инфо-канал</h3>
+        <p>Открой <a href="https://t.me/info6784" target="_blank" rel="noopener">@info6784</a> — там список ролей, правила и все объявления.</p>
+      </article>
+      <article class="card step reveal">
+        <div class="step-num">02</div>
+        <h3>Напиши владельцу</h3>
+        <p>Отметь <a href="https://t.me/Wrifi_7" target="_blank" rel="noopener">@Wrifi_7</a> в личные сообщения, выбери роль из списка и скажи, кто ты.</p>
+      </article>
+      <article class="card step reveal">
+        <div class="step-num">03</div>
+        <h3>Набирай норму</h3>
+        <p>Общайся в чате и набирай <b>70 сообщений в неделю</b>, чтобы остаться в флуде. Роль закрепляется за тобой.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="section" id="rules">
     <div class="section-head reveal">
       <span class="section-kicker">порядок</span>
@@ -921,8 +956,12 @@
     }
     try { localStorage.setItem('bs-theme', mode); } catch (e) {}
   }
-  let savedTheme = 'night';
-  try { savedTheme = localStorage.getItem('bs-theme') || 'night'; } catch (e) {}
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem('bs-theme'); } catch (e) {}
+  if (!savedTheme) {
+    const h = new Date().getHours();
+    savedTheme = (h >= 7 && h < 20) ? 'day' : 'night';
+  }
   applyTheme(savedTheme);
 
   themeBtn.addEventListener('click', () => {
@@ -1260,6 +1299,30 @@
   searchInput.addEventListener('input', () => filterRoles(searchInput.value));
   clearBtn.addEventListener('click', () => { searchInput.value = ''; filterRoles(''); searchInput.focus(); });
   updateCounters();
+
+  /* ---------- count-up animation ---------- */
+  function animateCount(el, to, dur = 1400) {
+    const t0 = performance.now();
+    function frame(t) {
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * eased);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const countersBox = document.querySelector('.counters');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      countObserver.unobserve(en.target);
+      animateCount(cTotal, allChars.length);
+      animateCount(cFree, allChars.filter(c => c.st === 'f').length);
+      animateCount(cBusy, allChars.filter(c => c.st === 'b').length);
+      animateCount(cHold, allChars.filter(c => c.st === 'h').length);
+    });
+  }, { threshold: .3 });
+  if (countersBox) countObserver.observe(countersBox);
 </script>
 </body>
 </html>
